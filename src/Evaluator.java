@@ -1,14 +1,9 @@
+import java.util.Comparator;
 
 public class Evaluator {
-    public static double gn(){
-        return 0.1;
-    }
+    public static final Comparator<TreeNode> UCS = Comparator.comparingInt(TreeNode::getCost);
 
-    public static double hn(){
-        return 0.1;
-    }
+    public static final Comparator<TreeNode> GBFS = Comparator.comparingInt(n -> n.getHeuristic());
 
-    public static double fn(){
-        return gn() + hn();
-    }
+    public static final Comparator<TreeNode> AStar = Comparator.comparingInt(n -> n.getCost() + n.getHeuristic());
 }

@@ -17,8 +17,11 @@ public  class Board {
         this.movement = movement;
     }
 
+    public int getRows() { return rows; }
+    public int getCols() { return cols; }
     public Position getExit() { return exit; }
     public String[][] getGrid() { return grid; }
+    public HashMap<String, Piece> getPieces() { return pieces; }
     public Movement getMovement() { return movement; }
 
     public void setMovement(String pieceValue, int dir){
