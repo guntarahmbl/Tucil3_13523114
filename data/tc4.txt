@@ -1,0 +1,8 @@
+6 6
+12
+ AABBCD
+ .JJICD
+KG..IPP
+ G.HFFN
+ G.HMMN
+ ..EELL
