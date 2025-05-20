@@ -1,5 +1,5 @@
 
-public class TreeNode implements Comparable<TreeNode> {
+public class TreeNode {
     private Board board;
     private TreeNode parent;
     private int cost;
@@ -24,12 +24,5 @@ public class TreeNode implements Comparable<TreeNode> {
 
     public int getHeuristic() { return heuristic; }
     public void setHeuristic(int heuristic) { this.heuristic = heuristic; }
-
-
-    @Override
-    public int compareTo(TreeNode other) {
-        return Integer.compare(this.cost, other.cost); // UCS: g(n)
-    }
-
 
 }

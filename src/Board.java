@@ -44,14 +44,11 @@ public  class Board {
         int r = primary.getRowPos();
         int c = primary.getColPos();
         
-        
-
         for (int i = 0; i < primary.getSize(); i++) {
             if (!primary.getOrientation()) { // horizontal
-                // System.out.println("Primary pos: " + r + " " + c);
-                if (exit.row == r && exit.col == c+i) return true;
+                if (exit.row == r && Math.abs(exit.col - (c+i)) == 1) return true;
             } else { // vertical
-                if (exit.row == r+i && exit.col == c) return true;
+                if (Math.abs(exit.row - (r+i)) == 1 && exit.col == c) return true;
             }
         }
         return false;
@@ -112,19 +109,24 @@ public  class Board {
         for (Piece p : this.pieces.values()) {
             Piece clone = new Piece(p.getValue(), p.getRowPos(), p.getColPos(), p.getSize(), p.getOrientation());
             b.pieces.put(String.valueOf(p.getValue()), clone);
-            for (Position pos : getOccupiedPositions(clone)) {
-                b.grid[pos.row][pos.col] = clone.getValue();
-            }
+            // for (Position pos : getOccupiedPositions(clone)) {
+            //     b.grid[pos.row][pos.col] = clone.getValue();
+            // }
         }
 
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[0].length; j++) {
-                if (b.grid[i][j] == null){
-                    b.grid[i][j] = ".";
-                }
-            }
+        // for (int i = 0; i < grid.length; i++) {
+        //     for (int j = 0; j < grid[0].length; j++) {
+        //         if (b.grid[i][j] == null){
+        //             b.grid[i][j] = ".";
+        //         }
+        //     }
+        // }
+
+        for (int i = 0; i < rows; i++) {
+            b.grid[i] = Arrays.copyOf(this.grid[i], cols);
         }
-    
+        
+        
         return b;
     }
 
@@ -170,7 +172,7 @@ public  class Board {
 
     @Override
     public int hashCode() {
-        return Arrays.deepHashCode(this.getGridRepresentation());
+        return Arrays.deepHashCode(this.grid);
     }
     
                 

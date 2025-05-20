@@ -86,8 +86,8 @@ public class Algorithm {
         int exitCol = b.getExit().col;
     
         // right exit
-        if (exitCol > endCol) {
-            for (int col = endCol + 1; col <= exitCol; col++) {
+        if (exitCol == b.getCols()) {
+            for (int col = endCol + 1; col < exitCol; col++) {
                 String cell = b.getGrid()[row][col];
                 if (!cell.equals(".") && !cell.equals("P")) {
                     Piece blocker = b.getPieces().get(cell);
@@ -96,9 +96,8 @@ public class Algorithm {
                     }
                 }
             }
-        } else if (exitCol < startCol) { // left exit
-            
-            for (int col = startCol - 1; col >= exitCol; col--) {
+        } else if (exitCol == -1) { // left exit
+            for (int col = startCol - 1; col > exitCol; col--) {
                 String cell = b.getGrid()[row][col];
                 if (!cell.equals(".") && !cell.equals("P")) {
                     Piece blocker = b.getPieces().get(cell);
@@ -115,5 +114,32 @@ public class Algorithm {
     public int calculateCost(TreeNode node) {
         return node.getCost() + 1;
     }
+
+    public TreeNode solveAndReturn(TreeNode root, Comparator<TreeNode> comparator) {
+        long startTime = System.nanoTime();
+        PriorityQueue<TreeNode> q = new PriorityQueue<>(comparator);
+        Set<Board> visited = new HashSet<>();
+        q.add(root);
+    
+        while (!q.isEmpty()) {
+            TreeNode current = q.poll();
+            Board board = current.getBoard();
+    
+            if (visited.contains(board)) continue;
+            visited.add(board);
+    
+            if (board.isGoal()) return current;
+    
+            for (Board successor : board.generateSuccessors()) {
+                if (!visited.contains(successor)) {
+                    TreeNode child = new TreeNode(successor, current, calculateCost(current), calculateHeuristic(successor));
+                    q.add(child);
+                }
+            }
+        }
+    
+        return null;
+    }
+    
     
 }

@@ -75,33 +75,50 @@ public class Piece {
             case 2 -> deltaCol = 1;  // right
             case 1 -> deltaRow = -1; // up
             case 3 -> deltaRow = 1;  // down
+            default -> {
+                return moves; // arah tidak valid
+            }
+        }
+    
+        // Cek validitas arah terhadap orientasi
+        if ((!orientation && (dir == 1 || dir == 3)) || // horizontal tapi arah vertical
+            (orientation && (dir == 0 || dir == 2))) { // vertical tapi arah horizontal
+            return moves;
         }
     
         int steps = 1;
         while (true) {
+            Position check;
+            if (!orientation) { // horizontal
+                check = (dir == 0)
+                    ? new Position(rowPos, colPos - steps)
+                    : new Position(rowPos, colPos + size - 1 + steps);
+            } else { // vertical
+                check = (dir == 1)
+                    ? new Position(rowPos - steps, colPos)
+                    : new Position(rowPos + size - 1 + steps, colPos);
+            }
+    
+            if (!board.inBounds(check) || !board.isEmpty(check)) {
+                steps--;
+                break;
+            }
+    
+            steps++;
+        }
+    
+        if (steps > 0) {
             int newRow = rowPos + deltaRow * steps;
             int newCol = colPos + deltaCol * steps;
     
-            
-            Position check;
-            if (orientation == false) { // horizontal
-                if (dir == 0) check = new Position(rowPos, colPos - steps); // front moves left
-                else if (dir == 2) check = new Position(rowPos, colPos + size - 1 + steps); // back extends right
-                else break; // invalid
-            } else { // vertical
-                if (dir == 1) check = new Position(rowPos - steps, colPos); // front moves up
-                else if (dir == 3) check = new Position(rowPos + size - 1 + steps, colPos); // back extends down
-                else break; // invalid
+            if (board.inBounds(new Position(newRow, newCol))) {
+                moves.add(new Piece(value, newRow, newCol, size, orientation));
             }
-            
-            if (!board.inBounds(check) || !board.isEmpty(check)) break;
-    
-            moves.add(new Piece(value, rowPos + deltaRow * steps, colPos + deltaCol * steps, size, orientation));
-            steps++;
         }
     
         return moves;
     }
+    
     
     
     
