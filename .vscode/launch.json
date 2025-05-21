@@ -1,0 +1,16 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Run RushHourApp",
+      "request": "launch",
+      "mainClass": "RushHourApp",
+      "cwd": "${workspaceFolder}",
+      "vmArgs": "--module-path C:/javafx/lib --add-modules javafx.controls,javafx.fxml",
+      "classPaths": [
+        "src"
+      ]
+    }
+  ]
+}

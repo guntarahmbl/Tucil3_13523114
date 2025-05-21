@@ -1,8 +1,9 @@
 6 6
 12
- AABBCD
- EJJICD
-KE..IPP
- .G..FF
- .GHHH.
- .G.LLL
+AABP..
+..BPCD
+LLJJCD
+..IFFE
+.MI.GE
+.MHHGE
+K

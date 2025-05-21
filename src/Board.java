@@ -109,18 +109,10 @@ public  class Board {
         for (Piece p : this.pieces.values()) {
             Piece clone = new Piece(p.getValue(), p.getRowPos(), p.getColPos(), p.getSize(), p.getOrientation());
             b.pieces.put(String.valueOf(p.getValue()), clone);
-            // for (Position pos : getOccupiedPositions(clone)) {
-            //     b.grid[pos.row][pos.col] = clone.getValue();
-            // }
+
         }
 
-        // for (int i = 0; i < grid.length; i++) {
-        //     for (int j = 0; j < grid[0].length; j++) {
-        //         if (b.grid[i][j] == null){
-        //             b.grid[i][j] = ".";
-        //         }
-        //     }
-        // }
+
 
         for (int i = 0; i < rows; i++) {
             b.grid[i] = Arrays.copyOf(this.grid[i], cols);
@@ -167,7 +159,7 @@ public  class Board {
         if (this == o) return true;
         if (o == "." || getClass() != o.getClass()) return false;
         Board board = (Board) o;
-        return Arrays.deepEquals(this.getGridRepresentation(), board.getGridRepresentation());
+        return Arrays.deepEquals(this.grid, board.grid);
     }
 
     @Override
@@ -175,7 +167,4 @@ public  class Board {
         return Arrays.deepHashCode(this.grid);
     }
     
-                
-    
-
 }

@@ -80,7 +80,6 @@ public class Piece {
             }
         }
     
-        // Cek validitas arah terhadap orientasi
         if ((!orientation && (dir == 1 || dir == 3)) || // horizontal tapi arah vertical
             (orientation && (dir == 0 || dir == 2))) { // vertical tapi arah horizontal
             return moves;
@@ -118,8 +117,5 @@ public class Piece {
     
         return moves;
     }
-    
-    
-    
     
 }
