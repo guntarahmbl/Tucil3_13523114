@@ -341,6 +341,10 @@ public class RushHourApp extends Application {
         }
     
         Position exit = detectExit(lines, rows, cols);
+        if (exit.row == -1 && exit.col == -1) {
+            showAlert("Invalid Input", "Exit not recognized in the board configuration.");
+            return null;
+        }
     
         int lowerBound = rows - 1, upperBound = 0, leftBound = 0, rightBound = cols - 1;
         if (exit.col == -1) { // exit di kiri
@@ -383,11 +387,16 @@ public class RushHourApp extends Application {
             row++;
         }
     
-        // Deteksi Pieces
+        int primaryCount = 0;
+    
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 String ch = charMatrix[i][j];
                 if (ch == null || ch.equals(".") || pieces.containsKey(ch)) continue;
+    
+                if (ch.equalsIgnoreCase("P")) {
+                    primaryCount++;
+                }
     
                 int size = 1;
                 boolean isVertical = false;
@@ -412,8 +421,17 @@ public class RushHourApp extends Application {
             }
         }
     
+        if (primaryCount > 1) {
+            showAlert("Invalid Input", "Multiple primary pieces (P) detected in the board configuration.");
+            return null;
+        } else if (primaryCount == 0) {
+            showAlert("Invalid Input", "No primary piece (P) found in the board configuration.");
+            return null;
+        }
+    
         return new Board(rows, cols, exit, grid, pieces, null);
     }
+    
     
     private Position detectExit(List<String> lines, int rows, int cols) {
         for (int i = 0; i < lines.size(); i++) {
